@@ -35,14 +35,38 @@ class ITimeTest extends groovy.util.GroovyTestCase {
 
     void testGetDayInWeek() {
         ITime time = new Time(2014, 9, 29, 15, 3);
-        assertEquals(DayInWeek.SUN, time.getDayInWeek());
+        assertEquals(DayInWeek.MON, time.getDayInWeek());
     }
 
-    void testPlus() {
-
+    void testPlusAddition() {
+        ITime time = new Time(2014, 9, 29, 15, 3);
+        time.plus(67);
+        ITime timeAdded = new Time(2014, 9, 29, 16, 10);
+        assertEquals(timeAdded, time);
     }
 
-    void testDifference() {
+    void testPlusSubstraction() {
+        ITime time = new Time(2014, 9, 29, 0, 3);
+        time.plus(-33);
+        ITime timeAdded = new Time(2014, 9, 28, 23, 30);
+        assertEquals(timeAdded, time);
+    }
 
+    void testDifferenceZero() {
+        ITime time = new Time(2014, 9, 29, 0, 3);
+        ITime timeDiff = new Time(2014, 9, 29, 0, 3);
+        assertEquals(0, time.difference(timeDiff));
+    }
+
+    void testDifferenceNegative() {
+        ITime time = new Time(2014, 9, 29, 0, 3);
+        ITime timeDiff = new Time(2014, 9, 29, 12, 3);
+        assertEquals(-720, time.difference(timeDiff));
+    }
+
+    void testDifferencePositive() {
+        ITime time = new Time(2014, 9, 29, 12, 3);
+        ITime timeDiff = new Time(2014, 9, 29, 0, 3);
+        assertEquals(720, time.difference(timeDiff));
     }
 }

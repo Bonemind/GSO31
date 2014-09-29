@@ -1,9 +1,14 @@
 package fontys.time;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 /**
  * Created by Subhi on 29-9-2014.
  */
 public class Time implements ITime {
+    private GregorianCalendar calendar;
+
     /**
      * creation of a Time-object with year y, month m, day d, hours h and
      * minutes m; if the combination of y-m-d refers to a non-existing date
@@ -15,14 +20,15 @@ public class Time implements ITime {
      * @param m 0≤m≤59
      */
     public Time(int y, int m, int d, int h, int min) {
-        //TODO: Implement
+        //GregorianCalendar months are zero based, so m - 1...
+        calendar = new GregorianCalendar(y, m - 1, d, h, min);
     }
     /**
      * @return the concerning year of this time
      */
     @Override
     public int getYear() {
-        return 0;
+        return calendar.get(Calendar.YEAR);
     }
 
     /**
@@ -30,7 +36,7 @@ public class Time implements ITime {
      */
     @Override
     public int getMonth() {
-        return 0;
+        return calendar.get(Calendar.MONTH) + 1;
     }
 
     /**
@@ -38,7 +44,7 @@ public class Time implements ITime {
      */
     @Override
     public int getDay() {
-        return 0;
+        return calendar.get(Calendar.DAY_OF_MONTH);
     }
 
     /**
@@ -46,7 +52,7 @@ public class Time implements ITime {
      */
     @Override
     public int getHours() {
-        return 0;
+        return calendar.get(Calendar.HOUR_OF_DAY);
     }
 
     /**
@@ -54,7 +60,7 @@ public class Time implements ITime {
      */
     @Override
     public int getMinutes() {
-        return 0;
+        return calendar.get(Calendar.MINUTE);
     }
 
     /**
@@ -62,7 +68,7 @@ public class Time implements ITime {
      */
     @Override
     public DayInWeek getDayInWeek() {
-        return null;
+        return DayInWeek.values()[calendar.get(Calendar.DAY_OF_WEEK) - 1];
     }
 
     /**
@@ -71,7 +77,8 @@ public class Time implements ITime {
      */
     @Override
     public ITime plus(int minutes) {
-        return null;
+        calendar.add(Calendar.MINUTE, minutes);
+        return this;
     }
 
     /**
@@ -80,7 +87,11 @@ public class Time implements ITime {
      */
     @Override
     public int difference(ITime time) {
-        return 0;
+        long thisTime = calendar.getTime().getTime();
+        long otherTime = new GregorianCalendar(time.getYear(), time.getMonth() - 1, time.getDay(), time.getHours(),
+                time.getMinutes()).getTime().getTime();
+        long diff = thisTime - otherTime;
+        return (int) ((diff / 60) / 1000);
     }
 
     /**
@@ -123,6 +134,6 @@ public class Time implements ITime {
      */
     @Override
     public int compareTo(ITime o) {
-        return 0;
+        return calendar.compareTo(new GregorianCalendar(o.getYear(), o.getMonth(), o.getDay(), o.getHours(), o.getMinutes()));
     }
 }
