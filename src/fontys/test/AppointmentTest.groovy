@@ -9,14 +9,6 @@ import fontys.time.Time
  * @author Michon
  */
 class AppointmentTest extends GroovyTestCase {
-    private static void assertLength(Iterator iter, int length) {
-        for (int i = 0; i < length; i++) {
-            assertTrue(iter.hasNext())
-            iter.next()
-        }
-        assertFalse(iter.hasNext())
-    }
-
     void testInvitees() {
         // Create some objects.
         Appointment a1 = new Appointment("Test 1", new Period(new Time(2014, 8, 8, 12, 10), new Time(2014, 8, 8, 12, 40)));
@@ -27,22 +19,22 @@ class AppointmentTest extends GroovyTestCase {
 
         // Test addContact.
         assertTrue(a1.addContact(c1));
-        assertLength(a1.invitees(), 1);
+        assertEquals(a1.invitees().size(), 1);
         assertTrue(a1.addContact(c2));
-        assertLength(a1.invitees(), 2);
+        assertEquals(a1.invitees().size(), 2);
         assertTrue(a2.addContact(c1));
-        assertLength(a2.invitees(), 1);
+        assertEquals(a2.invitees().size(), 1);
 
         // Test failing addContact.
         assertFalse(a3.addContact(c1));
-        assertLength(a3.invitees(), 0);
+        assertEquals(a3.invitees().size(), 0);
 
         // Test removeContact.
         a1.removeContact(c1)
-        assertLength(a1.invitees(), 1);
+        assertEquals(a1.invitees().size(), 1);
 
         // Re-test failing addContact, should succeed now.
         assertTrue(a3.addContact(c1));
-        assertLength(a3.invitees(), 1);
+        assertEquals(a3.invitees().size(), 1);
     }
 }
