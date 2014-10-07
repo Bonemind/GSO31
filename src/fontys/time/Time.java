@@ -142,10 +142,4 @@ public class Time implements ITime {
     public int compareTo(ITime o) {
         return calendar.compareTo(new GregorianCalendar(o.getYear(), o.getMonth() - 1, o.getDay(), o.getHours(), o.getMinutes()));
     }
-
-    @Override
-    public String toString() {
-
-        return String.format("%d-%d-%d %d:%d", this.getYear(), this.getMonth(), this.getDay(), this.getHours(), this.getMinutes());
-    }
 }

@@ -21,7 +21,7 @@ public interface IPeriod {
 
     /**
      * 
-     * @return the end time of this period
+     * @return the end time of ths period
      */
     ITime getEndTime();
 

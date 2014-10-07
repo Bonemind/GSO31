@@ -55,23 +55,23 @@ public class Period implements IPeriod {
 
     @Override
     public IPeriod unionWith(IPeriod period) {
-        if (period.getBeginTime().compareTo(end) < 0 && period.getEndTime().compareTo(begin) > 0) {
+        if (period.getBeginTime().compareTo(end) > 0 || period.getEndTime().compareTo(begin) < 0) {
             return null;
         }
         return new Period(
-            period.getBeginTime().compareTo(begin) < 0 ? begin : period.getBeginTime(),
-            period.getEndTime().compareTo(end) > 0 ? end : period.getEndTime()
+            period.getBeginTime().compareTo(begin) > 0 ? begin : period.getBeginTime(),
+            period.getEndTime().compareTo(end) < 0 ? end : period.getEndTime()
         );
     }
 
     @Override
     public IPeriod intersectionWith(IPeriod period) {
-        if (period.getBeginTime().compareTo(end) < 0 && period.getEndTime().compareTo(begin) > 0) {
+        if (period.getBeginTime().compareTo(end) > 0 || period.getEndTime().compareTo(begin) < 0) {
             return null;
         }
         return new Period(
-                period.getBeginTime().compareTo(begin) > 0 ? begin : period.getBeginTime(),
-                period.getEndTime().compareTo(end) < 0 ? end : period.getEndTime()
+                period.getBeginTime().compareTo(begin) < 0 ? begin : period.getBeginTime(),
+                period.getEndTime().compareTo(end) > 0 ? end : period.getEndTime()
         );
     }
 }

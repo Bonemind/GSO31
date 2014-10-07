@@ -102,7 +102,7 @@ class IPeriodTest extends GroovyTestCase {
 
         // No overlap.
         Period p7 = pp.unionWith(pd);
-        assertEquals(p7, null);
+        assertNull(p7);
     }
 
     void testIntersectionWith() {
@@ -134,6 +134,6 @@ class IPeriodTest extends GroovyTestCase {
 
         // No overlap.
         IPeriod p5 = pp.intersectionWith(pd);
-        assertEquals(p5, null);
+        assertNull(p5);
     }
 }
