@@ -1,13 +1,18 @@
 package fontys.test
 
 import fontys.time.IPeriod
+import fontys.time.ITime
 import fontys.time.Period
 import fontys.time.Time
 
 /**
  * @author Michon
  */
-class IPeriodTest extends groovy.util.GroovyTestCase {
+class IPeriodTest extends GroovyTestCase {
+    private static void assertEquals(ITime c1, ITime c2) {
+        assertEquals(c1.compareTo(c2), 0)
+    }
+
     void testLength() {
         IPeriod pp = new Period(new Time(2014, 8, 8, 12, 10), new Time(2014, 8, 9, 10, 34));
         assertEquals(pp.length(), 1344);
@@ -15,16 +20,18 @@ class IPeriodTest extends groovy.util.GroovyTestCase {
 
     void testMove() {
         IPeriod pp = new Period(new Time(2014, 8, 8, 12, 10), new Time(2014, 8, 9, 10, 34));
-        IPeriod moved = pp.move(10);
+        pp.move(10);
         IPeriod pm = new Period(new Time(2014, 8, 8, 12, 20), new Time(2014, 8, 9, 10, 44));
-        assertEquals(pm, moved);
+        assertEquals(pm.getBeginTime(), pp.getBeginTime());
+        assertEquals(pm.getEndTime(), pp.getEndTime());
     }
 
     void testChangeLengthWith() {
         IPeriod pp = new Period(new Time(2014, 8, 8, 12, 10), new Time(2014, 8, 9, 10, 34));
-        IPeriod moved = pp.changeLengthWith(10);
+        pp.changeLengthWith(10);
         IPeriod pm = new Period(new Time(2014, 8, 8, 12, 10), new Time(2014, 8, 9, 10, 44));
-        assertEquals(pm, moved);
+        assertEquals(pm.getBeginTime(), pp.getBeginTime());
+        assertEquals(pm.getEndTime(), pp.getEndTime());
     }
 
     void testIsPartOf() {
@@ -43,8 +50,6 @@ class IPeriodTest extends groovy.util.GroovyTestCase {
 
         // Consecutive period at begin.
         assertFalse(pp.isPartOf(pa));
-
-        // Consecutive period at end.
         assertFalse(pa.isPartOf(pp));
 
         // One period fully contained in the other.
@@ -72,7 +77,8 @@ class IPeriodTest extends groovy.util.GroovyTestCase {
 
         // Partial overlap at end.
         IPeriod p2 = pb.unionWith(pp);
-        assertEquals(p1, p2);
+        assertEquals(p1.getBeginTime(), p2.getBeginTime());
+        assertEquals(p1.getEndTime(), p2.getEndTime());
 
         // Consecutive period at begin.
         IPeriod p3 = pp.unionWith(pa);
@@ -86,11 +92,13 @@ class IPeriodTest extends groovy.util.GroovyTestCase {
 
         // One period fully contained in the other.
         IPeriod p5 = pp.unionWith(pc);
-        assertEquals(p5, pp);
+        assertEquals(p5.getBeginTime(), pp.getBeginTime());
+        assertEquals(p5.getEndTime(), pp.getEndTime());
 
         // Same, but reversed.
         Period p6 = pc.unionWith(pp);
-        assertEquals(p6, pp);
+        assertEquals(p6.getBeginTime(), pp.getBeginTime());
+        assertEquals(p6.getEndTime(), pp.getEndTime());
 
         // No overlap.
         Period p7 = pp.unionWith(pd);
@@ -111,15 +119,18 @@ class IPeriodTest extends groovy.util.GroovyTestCase {
 
         // Overlap at end.
         IPeriod p2 = pb.intersectionWith(pp);
-        assertEquals(p1, p2);
+        assertEquals(p1.getBeginTime(), p2.getBeginTime());
+        assertEquals(p1.getEndTime(), p2.getEndTime());
 
         // One period fully contained in the other.
         IPeriod p3 = pp.intersectionWith(pc);
-        assertEquals(p3, pc);
+        assertEquals(p3.getBeginTime(), pc.getBeginTime());
+        assertEquals(p3.getEndTime(), pc.getEndTime());
 
         // Same, but reversed.
         IPeriod p4 = pc.intersectionWith(pp);
-        assertEquals(p3, pc);
+        assertEquals(p4.getBeginTime(), pc.getBeginTime());
+        assertEquals(p4.getEndTime(), pc.getEndTime());
 
         // No overlap.
         IPeriod p5 = pp.intersectionWith(pd);

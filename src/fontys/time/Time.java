@@ -134,6 +134,6 @@ public class Time implements ITime {
      */
     @Override
     public int compareTo(ITime o) {
-        return calendar.compareTo(new GregorianCalendar(o.getYear(), o.getMonth(), o.getDay(), o.getHours(), o.getMinutes()));
+        return calendar.compareTo(new GregorianCalendar(o.getYear(), o.getMonth() - 1, o.getDay(), o.getHours(), o.getMinutes()));
     }
 }

@@ -24,7 +24,7 @@ public class Period implements IPeriod {
 
     @Override
     public int length() {
-        return begin.difference(end);
+        return Math.abs(begin.difference(end));
     }
 
     @Override
