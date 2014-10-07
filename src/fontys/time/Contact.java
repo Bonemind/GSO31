@@ -48,10 +48,13 @@ public class Contact {
      * @param a The appointment to remove
      */
     protected void removeAppointment(Appointment a) {
-        a.removeContact(this);
         appointments.remove(a);
     }
 
+    /**
+     * Returns the appointments iterator
+     * @return The iterator
+     */
     public Iterator<Appointment> appointments() {
         return appointments.iterator();
     }
