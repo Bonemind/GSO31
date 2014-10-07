@@ -39,13 +39,13 @@ public class Period implements IPeriod {
 
     @Override
     public void move(int minutes) {
-        begin.plus(minutes);
-        end.plus(minutes);
+        begin = begin.plus(minutes);
+        end = end.plus(minutes);
     }
 
     @Override
     public void changeLengthWith(int minutes) {
-        end.plus(minutes);
+        end = end.plus(minutes);
     }
 
     @Override

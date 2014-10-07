@@ -40,16 +40,14 @@ class ITimeTest extends groovy.util.GroovyTestCase {
 
     void testPlusAddition() {
         ITime time = new Time(2014, 9, 29, 15, 3);
-        time.plus(67);
         ITime timeAdded = new Time(2014, 9, 29, 16, 10);
-        assertEquals(timeAdded, time);
+        assertEquals(timeAdded, time.plus(67));
     }
 
     void testPlusSubstraction() {
         ITime time = new Time(2014, 9, 29, 0, 3);
-        time.plus(-33);
         ITime timeAdded = new Time(2014, 9, 28, 23, 30);
-        assertEquals(timeAdded, time);
+        assertEquals(timeAdded, time.plus(-33));
     }
 
     void testDifferenceZero() {

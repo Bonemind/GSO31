@@ -1,5 +1,7 @@
 package fontys.time;
 
+import groovy.transform.ToString;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -77,8 +79,12 @@ public class Time implements ITime {
      */
     @Override
     public ITime plus(int minutes) {
-        calendar.add(Calendar.MINUTE, minutes);
-        return this;
+        Calendar newCalendar = (GregorianCalendar) calendar.clone();
+        newCalendar.add(Calendar.MINUTE, minutes);
+        ITime addedTime = new Time(newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH) + 1,
+                newCalendar.get(Calendar.DAY_OF_MONTH), newCalendar.get(Calendar.HOUR_OF_DAY),
+                newCalendar.get(Calendar.MINUTE));
+        return addedTime;
     }
 
     /**
@@ -135,5 +141,11 @@ public class Time implements ITime {
     @Override
     public int compareTo(ITime o) {
         return calendar.compareTo(new GregorianCalendar(o.getYear(), o.getMonth() - 1, o.getDay(), o.getHours(), o.getMinutes()));
+    }
+
+    @Override
+    public String toString() {
+
+        return String.format("%d-%d-%d %d:%d", this.getYear(), this.getMonth(), this.getDay(), this.getHours(), this.getMinutes());
     }
 }

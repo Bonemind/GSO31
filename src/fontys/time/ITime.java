@@ -57,5 +57,7 @@ public interface ITime extends Comparable<ITime> {
      * @return the difference between this time and [time] expressed in minutes
      */
     int difference(ITime time);
+
+
     
 }
