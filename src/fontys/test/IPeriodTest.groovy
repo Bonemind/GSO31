@@ -108,6 +108,7 @@ class IPeriodTest extends GroovyTestCase {
     void testIntersectionWith() {
         // Define time periods.
         IPeriod pp = new Period(new Time(2014, 8, 8, 12, 10), new Time(2014, 8, 9, 10, 34));
+        IPeriod pa = new Period(new Time(2014, 8, 8, 10, 4), pp.getBeginTime());             // Before and until start of pp.
         IPeriod pb = new Period(new Time(2014, 8, 8, 10, 22), new Time(2014, 8, 8, 14, 45)); // Before and in pp.
         IPeriod pc = new Period(new Time(2014, 8, 8, 16, 34), new Time(2014, 8, 9, 6, 43));  // Completely inside pp.
         IPeriod pd = new Period(new Time(2014, 8, 9, 17, 56), new Time(2014, 8, 10, 5, 45)); // No overlap with pp.
@@ -122,18 +123,26 @@ class IPeriodTest extends GroovyTestCase {
         assertEquals(p1.getBeginTime(), p2.getBeginTime());
         assertEquals(p1.getEndTime(), p2.getEndTime());
 
+        // Consecutive period at begin.
+        IPeriod p3 = pp.intersectionWith(pa);
+        assertNull(p3);
+
+        // Consecutive period at end.
+        IPeriod p4 = pa.intersectionWith(pp);
+        assertNull(p4);
+
         // One period fully contained in the other.
-        IPeriod p3 = pp.intersectionWith(pc);
-        assertEquals(p3.getBeginTime(), pc.getBeginTime());
-        assertEquals(p3.getEndTime(), pc.getEndTime());
+        IPeriod p5 = pp.intersectionWith(pc);
+        assertEquals(p5.getBeginTime(), pc.getBeginTime());
+        assertEquals(p5.getEndTime(), pc.getEndTime());
 
         // Same, but reversed.
-        IPeriod p4 = pc.intersectionWith(pp);
-        assertEquals(p4.getBeginTime(), pc.getBeginTime());
-        assertEquals(p4.getEndTime(), pc.getEndTime());
+        IPeriod p6 = pc.intersectionWith(pp);
+        assertEquals(p6.getBeginTime(), pc.getBeginTime());
+        assertEquals(p6.getEndTime(), pc.getEndTime());
 
         // No overlap.
-        IPeriod p5 = pp.intersectionWith(pd);
-        assertNull(p5);
+        IPeriod p7 = pp.intersectionWith(pd);
+        assertNull(p7);
     }
 }

@@ -86,5 +86,6 @@ public class Appointment {
      */
     public void removeContact(Contact c) {
         invitees.remove(c);
+        c.removeAppointment(this);
     }
 }
