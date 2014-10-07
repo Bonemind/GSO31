@@ -12,7 +12,7 @@ class AppointmentTest extends GroovyTestCase {
     void testInvitees() {
         // Create some objects.
         Appointment a1 = new Appointment("Test 1", new Period(new Time(2014, 8, 8, 12, 10), new Time(2014, 8, 8, 12, 40)));
-        Appointment a2 = new Appointment("Test 2", new Period(new Time(2014, 8, 9, 10, 0), new Time(2014, 8, 9, 10, 45))));
+        Appointment a2 = new Appointment("Test 2", new Period(new Time(2014, 8, 9, 10, 0), new Time(2014, 8, 9, 10, 45)));
         Appointment a3 = new Appointment("Test 3", new Period(new Time(2014, 8, 8, 12, 30), new Time(2014, 8, 8, 13, 15)));
         Contact c1 = new Contact("John");
         Contact c2 = new Contact("Jane");
